@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import {PDFDownloadLink, PDFViewer} from '@react-pdf/renderer'
 import './App.css';
+import PdfDocument from './1.generate-pdf/generateInvoice/Invoice'
+import InvoiceData from './1.generate-pdf/jsonData/InvoiceData'
 
 function App() {
+  const fileName = 'Invoice.pdf'
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <PDFViewer >
+        <PdfDocument invoicedata = {InvoiceData} />
+      </PDFViewer>
+
+      <div className="download-link">
+        <PDFDownloadLink document={<PdfDocument invoicedata ={InvoiceData} />} 
+                         fileName={fileName}
         >
-          Learn React
-        </a>
-      </header>
+          {
+            ({blob, url, loading, error}) => loading ? "Loading..."
+                                                     : "Download Invoice"
+          }
+        </PDFDownloadLink>
+      </div>
     </div>
+
   );
 }
 
